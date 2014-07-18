@@ -18,7 +18,7 @@
 package org.apache.poi.util;
 
 import java.io.File;
-import java.util.Random;
+import java.io.IOException;
 
 /**
  * Interface for creating temporary files.  Collects them all into one directory.
@@ -27,7 +27,6 @@ import java.util.Random;
  */
 public final class TempFile {
     private static File dir;
-    private static final Random rnd = new Random();
 
     /**
      * Creates a temporary file.  Files are collected into one directory and by default are
@@ -35,8 +34,10 @@ public final class TempFile {
      * <code>poi.keep.tmp.files</code>.
      * <p>
      * Don't forget to close all files or it might not be possible to delete them.
+     * 
+     * @throws IOException If no temporary file could be created.
      */
-    public static File createTempFile(String prefix, String suffix) {
+    public static File createTempFile(String prefix, String suffix) throws IOException {
         // Identify and create our temp dir, if needed
         if (dir == null)
         {
@@ -47,12 +48,7 @@ public final class TempFile {
         }
 
         // Generate a unique new filename 
-        File newFile = new File(dir, prefix + rnd.nextInt() + suffix);
-        if (newFile.exists())
-        {
-           // That name is already taken, try another
-           newFile = createTempFile(prefix, suffix);
-        }
+        File newFile = File.createTempFile(prefix, suffix, dir);
 
         // Set the delete on exit flag, unless explicitly disabled
         if (System.getProperty("poi.keep.tmp.files") == null)

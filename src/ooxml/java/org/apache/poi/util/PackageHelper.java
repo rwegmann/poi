@@ -81,18 +81,6 @@ public final class PackageHelper {
     }
 
     /**
-     * Creates an empty file in the default temporary-file directory,
-     */
-    public static File createTempFile() {
-        File file = TempFile.createTempFile("poi-ooxml-", ".tmp");
-        //there is no way to pass an existing file to Package.create(file),
-        //delete first, the file will be re-created in Packe.create(file)
-        file.delete();
-        return file;
-
-    }
-
-    /**
      * Recursively copy package parts to the destination package
      */
     private static void copy(OPCPackage pkg, PackagePart part, OPCPackage tgt, PackagePart part_tgt) throws OpenXML4JException, IOException {
