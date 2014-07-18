@@ -17,6 +17,8 @@
 
 package org.apache.poi.ss.formula.function;
 
+import org.apache.poi.util.TempFile;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -577,7 +579,7 @@ public final class ExcelFileFormatDocFunctionExtractor {
 			URLConnection conn = url.openConnection();
 			InputStream is = conn.getInputStream();
 			System.out.println("downloading " + url.toExternalForm());
-			result = File.createTempFile("excelfileformat", ".odt");
+			result = TempFile.createTempFile("excelfileformat", ".odt");
 			OutputStream os = new FileOutputStream(result);
 			while(true) {
 				int bytesRead = is.read(buf);
